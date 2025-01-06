@@ -55,18 +55,12 @@ class EncoderBlock(nn.Module):
 
         self.layers_list = nn.ModuleList()
 
-        self.hidden_channels = out_channels // 4
+        self.hidden_channels = out_channels // 2
         self.layers_list.append(
             nn.Conv2d(in_channels, self.hidden_channels, kernel_size=1)
         )
 
         for _ in range(n_layers):
-            self.layers_list.append(
-                ResidualBlock(
-                    in_channels=self.hidden_channels, out_channels=self.hidden_channels
-                )
-            )
-
             self.layers_list.extend(
                 [
                     ResidualBlock(
@@ -105,7 +99,7 @@ class DecoderBlock(nn.Module):
 
         self.layers_list = nn.ModuleList()
 
-        self.hidden_channels = in_channels // 4
+        self.hidden_channels = in_channels // 2
         self.layers_list.append(
             nn.Conv2d(in_channels, self.hidden_channels, kernel_size=1)
         )
@@ -134,7 +128,7 @@ class DecoderBlock(nn.Module):
         self.layers_list.append(
             nn.Conv2d(self.hidden_channels, out_channels, kernel_size=1)
         )
-
+        self.layers_list.append(nn.Sigmoid())
         self.decoder_layers = nn.Sequential(*self.layers_list)
 
     def forward(self, x):

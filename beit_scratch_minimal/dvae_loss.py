@@ -23,4 +23,4 @@ class DVAEELBOLoss(nn.Module):
         mse_loss = F.mse_loss(x_hat, x)
         loss = mse_loss + self.kl_div_weight * elbo_loss
 
-        return loss
+        return loss, mse_loss, elbo_loss
