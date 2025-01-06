@@ -5,8 +5,8 @@ import yaml
 
 from data_loader import DVAEDataset
 from dvae_loss import DVAEELBOLoss
-from models.model_builder import build_dvae_model
-from models.blocks import EncoderBlock, DecoderBlock
+from beit_scratch_minimal.models.vqvae_model_builder import build_dvae_model
+from beit_scratch_minimal.models.vqvae_blocks import EncoderBlock, DecoderBlock
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from training_engine import DVAETrainEngine
