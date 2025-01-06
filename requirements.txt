@@ -1,0 +1,13 @@
+torch
+torchvision
+albumentations
+numpy
+pillow
+opencv-python
+tqdm
+matplotlib
+pandas
+ipykernel
+timm
+pytorch-lightning
+mlflow
