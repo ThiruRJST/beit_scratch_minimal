@@ -1,0 +1,18 @@
+DVAEEncoder:
+  num_resnet_blocks: 2
+  num_layers: 3
+  codebook_dim: 512
+
+DVAECodebook:
+  codebook_size: 512
+  codebook_dim: 512
+  gumbel_temperature: 0.5
+  gumbel_hard: False
+
+DVAELoss:
+  kl_weight: 0.25
+
+train:
+  batch_size: 16
+  num_epochs: 100
+  lr: 0.0001
