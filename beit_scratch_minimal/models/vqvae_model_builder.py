@@ -29,16 +29,17 @@ class DVAE(nn.Module):
         
         soft_logits = F.gumbel_softmax(logits, tau=self.temperature, hard=False)
         
-        codebook_enc = torch.matmul(soft_logits, self.codebook.weight)
+        codebook_enc = torch.matmul(soft_logits.unsqueeze(-2), self.codebook.weight).squeeze(-2)
         
         return codebook_enc, logits
     
     def forward(self, x):
         codebook_enc, logits = self.encode(x)
-        x_hat = self.decoder(codebook_enc.permute(0, 3, 1, 2))
-        return x_hat, logits
+        return codebook_enc, logits
 
-
+    def decode(self, z):
+        return self.decoder(z)
+    
 def build_dvae_model(
         encoder: nn.Module,
         decoder: nn.Module,

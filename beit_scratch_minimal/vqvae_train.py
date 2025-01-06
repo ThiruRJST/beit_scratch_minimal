@@ -5,8 +5,8 @@ import yaml
 
 from data_loader import DVAEDataset
 from dvae_loss import DVAEELBOLoss
-from beit_scratch_minimal.models.vqvae_model_builder import build_dvae_model
-from beit_scratch_minimal.models.vqvae_blocks import EncoderBlock, DecoderBlock
+from models.vqvae_model_builder import build_dvae_model
+from models.vqvae_blocks import EncoderBlock, DecoderBlock
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from training_engine import DVAETrainEngine
@@ -77,18 +77,19 @@ if __name__ == "__main__":
     )
 
     checkpoint_cb = ModelCheckpoint(
-        monitor="val_loss",
+        monitor="val_total_loss",
         mode="min",
         save_top_k=1,
         dirpath="checkpoints",
-        filename="dvae-{epoch:02d}-{val_loss:.2f}",
+        filename="dvae-{epoch:02d}-{val_total_loss:.2f}",
     )
 
     early_stopping_cb = EarlyStopping(
-        monitor="val_loss",
+        monitor="val_total_loss",
         mode="min",
         patience=4,
         verbose=True,
+        min_delta=0.01
     )
 
     trainer = Trainer(
